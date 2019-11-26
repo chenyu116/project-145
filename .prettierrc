@@ -1,0 +1,8 @@
+{
+	"useTabs": true,
+	"proseWrap": "always",
+	"htmlWhitespaceSensitivity": "strict",
+	"disableLanguages": [],
+	"eslintIntegration": true,
+	"prettier.trailingComma": "all"
+}
