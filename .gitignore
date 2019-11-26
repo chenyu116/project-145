@@ -1,7 +1,8 @@
 .DS_Store
+
 node_modules
 /dist
-
+/public
 # local env files
 .env.local
 .env.*.local
@@ -19,3 +20,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+public/index.html
+vue.config.js

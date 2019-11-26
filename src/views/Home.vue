@@ -166,7 +166,17 @@
 				</el-amap>
 			</div>
 		</v-col>
-		<v-bottom-navigation grow color="primary" fixed="" height="70">
+		<v-tabs height="70" hide-slider="" icons-and-text="" show-arrows="" grow="">
+			<v-tabs-slider></v-tabs-slider>
+			<v-tab
+				v-for="(item, index) in bottomNav"
+				:key="index"
+				@click="navPage(item.text)"
+				><span :class="`black--text mb-1 ${navFont}`">{{ $t(item.text) }}</span>
+				<v-img :src="item.image" width="45" contain=""></v-img
+			></v-tab>
+		</v-tabs>
+		<!-- <v-bottom-navigation grow color="primary" fixed="" height="70">
 			<v-btn
 				v-for="(item, index) in bottomNav"
 				:key="index"
@@ -175,7 +185,7 @@
 				<span :class="`black--text mb-1 ${navFont}`">{{ $t(item.text) }}</span>
 				<v-img :src="item.image" width="50" contain=""></v-img>
 			</v-btn>
-		</v-bottom-navigation>
+		</v-bottom-navigation> -->
 		<v-img
 			v-show="enterMap"
 			id="toMapBtn"
@@ -283,7 +293,6 @@ export default {
 	data() {
 		let self = this;
 		return {
-			bgUrl: require("../assets/help.png"),
 			showHelp: false,
 			bannerType: "round",
 			articles: [],
@@ -297,6 +306,14 @@ export default {
 				{
 					text: "attractions",
 					image: require("@/assets/b1.png")
+				},
+				{
+					text: "vr",
+					image: require("@/assets/b5.png")
+				},
+				{
+					text: "video",
+					image: require("@/assets/b6.png")
 				},
 				{
 					text: "recommend",

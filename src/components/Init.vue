@@ -459,9 +459,13 @@ export default {
 			});
 		},
 		getPolygonAddress(lngLat, geocoder) {
-			return new Promise(function(resolve) {
+			return new Promise(function(resolve, reject) {
+				const addressTimeout = setTimeout(function() {
+					reject();
+				}, 5000);
 				geocoder.getAddress(lngLat, function(status, result) {
 					if (status === "complete" && result.info === "OK") {
+						clearTimeout(addressTimeout);
 						if (result && result.regeocode) {
 							resolve(result.regeocode.formattedAddress);
 						}

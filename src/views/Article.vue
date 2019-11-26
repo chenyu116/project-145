@@ -42,7 +42,6 @@ export default {
 	},
 	watch: {
 		id(val) {
-			console.log("watch id", val);
 			if (!val) return;
 			this.loadArticle(val);
 		}
@@ -89,7 +88,6 @@ export default {
 						})
 						.then(
 							function(resp) {
-								console.log(resp);
 								if (resp.status === 200 && resp.body) {
 									const timestamp = new Date().getTime() + 300 * 1000;
 									const writeStore = _this.$store.state.db

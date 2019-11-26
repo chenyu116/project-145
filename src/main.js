@@ -18,8 +18,8 @@ import WechatJSSDK from "wechat-jssdk/dist/client.umd";
 import VueSocketIO from "vue-socket.io";
 import "./scss/variables.scss";
 Vue.config.productionTip = false;
-const apiHost = "http://192.168.1.189/v2";
-const ossHost = "https://192.168.1.189/";
+const apiHost = "https://api.signp.cn/v2";
+const ossHost = "https://o.signp.cn/";
 Vue.apiHost = apiHost;
 Vue.prototype.apiHost = apiHost;
 Vue.prototype.ossHost = ossHost;
@@ -77,7 +77,7 @@ Vue.prototype.changePoint = function(point) {
 };
 const vueSocketIO = new VueSocketIO({
 	debug: false,
-	connection: "http://192.168.1.189",
+	connection: "https://socket.signp.cn",
 	vuex: {
 		store,
 		actionPrefix: "SOCKET_",
