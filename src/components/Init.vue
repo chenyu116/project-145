@@ -172,6 +172,7 @@ export default {
 						_db.createObjectStore("mapPolygons", { keyPath: "map_gid" });
 						_db.createObjectStore("mapPolygonAddress", { keyPath: "map_gid" });
 						_db.createObjectStore("events", { keyPath: "map_gid" });
+						_db.createObjectStore("panorama", { keyPath: "project_id" });
 						_db.createObjectStore("recommentRoutes", {
 							keyPath: "scenic_category_id"
 						});

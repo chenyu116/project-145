@@ -167,7 +167,6 @@
 			</div>
 		</v-col>
 		<v-tabs height="70" hide-slider="" icons-and-text="" show-arrows="" grow="">
-			<v-tabs-slider></v-tabs-slider>
 			<v-tab
 				v-for="(item, index) in bottomNav"
 				:key="index"
@@ -312,7 +311,7 @@ export default {
 					image: require("@/assets/b5.png")
 				},
 				{
-					text: "video",
+					text: "about",
 					image: require("@/assets/b6.png")
 				},
 				{
@@ -320,12 +319,12 @@ export default {
 					image: require("@/assets/b2.png")
 				},
 				{
-					text: "surrounding",
-					image: require("@/assets/b3.png")
-				},
-				{
 					text: "help",
 					image: require("@/assets/b4.png")
+				},
+				{
+					text: "surrounding",
+					image: require("@/assets/b3.png")
 				}
 			],
 			banner: [

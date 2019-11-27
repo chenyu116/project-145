@@ -3,16 +3,12 @@ import VueRouter from "vue-router";
 import store from "../store";
 import Home from "../views/Home.vue";
 import Help from "../views/Help.vue";
-import Attractions from "../views/Attractions.vue";
-import Recommend from "../views/Recommend.vue";
 import Article from "../views/Article.vue";
 import About from "../views/About.vue";
 import Details from "../views/Details.vue";
 import Search from "../views/Search.vue";
-import AttractionSurrounding from "../views/AttractionSurrounding.vue";
 import Surrounding from "../views/Surrounding.vue";
 import Map from "../views/Map.vue";
-import Route from "../views/Route.vue";
 
 Vue.use(VueRouter);
 
@@ -25,7 +21,7 @@ const routes = [
 	{
 		path: "/route",
 		name: "route",
-		component: Route
+		component: () => import("../views/Route.vue")
 	},
 	{
 		path: "/map",
@@ -35,7 +31,7 @@ const routes = [
 	{
 		path: "/attractionSurrounding",
 		name: "attractionSurrounding",
-		component: AttractionSurrounding
+		component: () => import("../views/AttractionSurrounding.vue")
 	},
 	{
 		path: "/surrounding",
@@ -60,12 +56,17 @@ const routes = [
 	{
 		path: "/attractions",
 		name: "attractions",
-		component: Attractions
+		component: () => import("../views/Attractions.vue")
+	},
+	{
+		path: "/vr",
+		name: "vr",
+		component: () => import("../views/Vr.vue")
 	},
 	{
 		path: "/recommend",
 		name: "recommend",
-		component: Recommend
+		component: () => import("../views/Recommend.vue")
 	},
 	{
 		path: "/help",

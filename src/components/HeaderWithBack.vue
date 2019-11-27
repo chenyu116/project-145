@@ -37,6 +37,10 @@
 <script>
 export default {
 	props: {
+		timeout: {
+			type: Number,
+			default: 500
+		},
 		title: {
 			type: String,
 			required: true
@@ -62,7 +66,7 @@ export default {
 					_this.$store.commit("updateIsBack", true);
 					_this.$router.replace(resp);
 				});
-			}, 500);
+			}, _this.timeout);
 		}
 	}
 };

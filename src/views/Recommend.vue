@@ -39,7 +39,12 @@
 						type="article"
 					>
 						<v-card flat="">
-							<v-tabs v-model="tab" background-color="white" grow="">
+							<v-tabs
+								v-model="tab"
+								background-color="white"
+								grow=""
+								show-arrows=""
+							>
 								<v-tab
 									v-for="(item, index) in routes"
 									:key="index"
@@ -55,11 +60,11 @@
 									:key="key"
 									:value="`route-${i.scenic_route_id}`"
 								>
-									<v-img
-										v-if="routeImages[key]"
-										:src="routeImages[key]"
+									<img
+										v-if="i.scenic_route_image"
+										:src="ossHost + i.scenic_route_image"
 										width="100%"
-										@click="showFullScreenImage(routeImages[key])"
+										preview="0"
 									/>
 									<template v-for="(n, k) in i.contents">
 										<v-divider
@@ -196,7 +201,6 @@ export default {
 		return {
 			fullScreen: false,
 			fullScreenImage: "",
-			routeImages: [require("../assets/redLine.png")],
 			showRouteMap: false,
 			currentStep: 0,
 			expand: false,
@@ -238,6 +242,7 @@ export default {
 				if (finished === _this.routes.length) {
 					clearInterval(initInterval);
 					_this.tab = "route-" + _this.routes[0].scenic_route_id;
+					_this.$previewRefresh();
 					_this.loading.routes = false;
 				}
 			}, 1000);
@@ -350,6 +355,7 @@ export default {
 						})
 						.then(
 							function(resp) {
+								console.log(resp);
 								if (resp.status === 200) {
 									const timestamp = new Date().getTime() + 300 * 1000;
 									const writeStore = _this.$store.state.db
@@ -411,9 +417,6 @@ export default {
 <style>
 .r-content img {
 	width: 100% !important;
-}
-.v-slide-group__prev {
-	display: none !important;
 }
 /* .v-expansion-panel::before {
 	box-shadow: none !important;
