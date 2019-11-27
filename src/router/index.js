@@ -1,14 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "../store";
-import Home from "../views/Home.vue";
-import Help from "../views/Help.vue";
-import Article from "../views/Article.vue";
-import About from "../views/About.vue";
-import Details from "../views/Details.vue";
-import Search from "../views/Search.vue";
-import Surrounding from "../views/Surrounding.vue";
-import Map from "../views/Map.vue";
 
 Vue.use(VueRouter);
 
@@ -16,7 +8,7 @@ const routes = [
 	{
 		path: "/details/:map_gid",
 		name: "details",
-		component: Details
+		component: () => import("../views/Details.vue")
 	},
 	{
 		path: "/route",
@@ -26,7 +18,7 @@ const routes = [
 	{
 		path: "/map",
 		name: "map",
-		component: Map
+		component: () => import("../views/Map.vue")
 	},
 	{
 		path: "/attractionSurrounding",
@@ -36,22 +28,22 @@ const routes = [
 	{
 		path: "/surrounding",
 		name: "surrounding",
-		component: Surrounding
+		component: () => import("../views/Surrounding.vue")
 	},
 	{
 		path: "/search",
 		name: "search",
-		component: Search
+		component: () => import("../views/Search.vue")
 	},
 	{
 		path: "/about",
 		name: "about",
-		component: About
+		component: () => import("../views/About.vue")
 	},
 	{
 		path: "/article/:id",
 		name: "article",
-		component: Article
+		component: () => import("../views/Article.vue")
 	},
 	{
 		path: "/attractions",
@@ -71,12 +63,12 @@ const routes = [
 	{
 		path: "/help",
 		name: "help",
-		component: Help
+		component: () => import("../views/Help.vue")
 	},
 	{
 		path: "/",
 		name: "home",
-		component: Home
+		component: () => import("../views/Home.vue")
 	}
 ];
 

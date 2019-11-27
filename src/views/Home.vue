@@ -166,7 +166,13 @@
 				</el-amap>
 			</div>
 		</v-col>
-		<v-tabs height="70" hide-slider="" icons-and-text="" show-arrows="" grow="">
+		<v-tabs
+			height="70"
+			hide-slider=""
+			icons-and-text=""
+			show-arrows=""
+			fixed-tabs=""
+		>
 			<v-tab
 				v-for="(item, index) in bottomNav"
 				:key="index"
