@@ -87,6 +87,25 @@ router.beforeEach((to, from, next) => {
 				store.commit("updateIsBack", false);
 			}
 		}
+		const _to = Object.assign({}, to);
+		delete _to.matched;
+		let locale = localStorage.getItem(
+			"signp-" + store.state.startPointInfo.project_id + ":locale"
+		);
+		if (!locale) {
+			locale = "zh_CN";
+		}
+		Vue.http.put(Vue.apiHost + "/project/spm", {
+			to: _to,
+			entrance: {
+				map_gid: store.state.startPointInfo.map_gid,
+				locale: locale,
+				agent: store.state.navigator.userAgent,
+				user: store.state.userId
+			},
+			projectID: store.state.startPointInfo.project_id,
+			timestamp: parseInt(new Date().getTime() / 1000)
+		});
 		next();
 	} else {
 		next({ path: "/", replace: true });

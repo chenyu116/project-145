@@ -94,13 +94,9 @@ export default {
 				}
 				if (!inProgress) {
 					inProgress = true;
-					Promise.mapSeries(
-						initFunc,
-						function(f) {
-							return f();
-						},
-						{ concurrency: 1 }
-					)
+					Promise.mapSeries(initFunc, function(f) {
+						return f();
+					})
 						.then(function() {
 							clearInterval(initInterval);
 							setTimeout(function() {

@@ -64,7 +64,7 @@
 										v-if="i.scenic_route_image"
 										:src="ossHost + i.scenic_route_image"
 										width="100%"
-										preview="0"
+										:preview="key"
 									/>
 									<template v-for="(n, k) in i.contents">
 										<v-divider
