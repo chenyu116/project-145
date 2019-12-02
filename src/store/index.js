@@ -22,7 +22,7 @@ export default new Vuex.Store({
 		searchKeywords: null,
 		currentRoute: null,
 		socketMessage: null,
-		userId: new Date().getTime()
+		userId: "" + new Date().getTime()
 	},
 	mutations: {
 		SOCKET_new_msg(state, value) {

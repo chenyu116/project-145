@@ -95,17 +95,25 @@ router.beforeEach((to, from, next) => {
 		if (!locale) {
 			locale = "zh_CN";
 		}
-		Vue.http.put(Vue.apiHost + "/project/spm", {
-			to: _to,
-			entrance: {
-				map_gid: store.state.startPointInfo.map_gid,
-				locale: locale,
-				agent: store.state.navigator.userAgent,
-				user: store.state.userId
+		Vue.http.put(
+			Vue.apiHost + "/project/spm",
+			{
+				type: "router",
+				content: JSON.stringify({
+					to: _to,
+					map_gid: store.state.startPointInfo.map_gid,
+					locale: locale,
+					agent: store.state.navigator.userAgent
+				}),
+				contentType: "json",
+				tag: store.state.userId,
+				projectID: store.state.startPointInfo.project_id,
+				timestamp: parseInt(new Date().getTime() / 1000)
 			},
-			projectID: store.state.startPointInfo.project_id,
-			timestamp: parseInt(new Date().getTime() / 1000)
-		});
+			{
+				emulateJSON: false
+			}
+		);
 		next();
 	} else {
 		next({ path: "/", replace: true });
