@@ -5,7 +5,7 @@
 			<router-view />
 		</v-content>
 		<v-bottom-sheet v-model="showSocketMessage" persistent="">
-			<v-card flat="" max-height="180">
+			<v-card flat="">
 				<v-list-item three-line>
 					<v-list-item-content>
 						<v-list-item-title :class="`title mb-1 ${msg.titleColor}`">{{
@@ -117,5 +117,8 @@ export default {
 }
 .amap-logo {
 	z-index: 1 !important;
+}
+.v-skeleton-loader__article {
+	background: rgba(0, 0, 0, 0) !important;
 }
 </style>

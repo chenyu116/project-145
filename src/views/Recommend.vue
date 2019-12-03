@@ -303,12 +303,16 @@ export default {
 												.objectStore("mapPolygons");
 											writePolygonStore.put(r);
 											_this.routes[index].contents.push(Object.assign(c, r));
-											resolve();
 										}
+										setTimeout(function() {
+											resolve();
+										}, 500);
 									},
 									function() {
 										_this.routes[index].contents.push(Object.assign(c, r));
-										resolve();
+										setTimeout(function() {
+											resolve();
+										}, 500);
 									}
 								);
 						} else {
