@@ -151,6 +151,7 @@
 					vid="amap"
 					:amap-manager="amapManager"
 					:center="center"
+					:zooms="$store.state.mapZooms"
 					:zoom="zoom"
 					:plugin="plugin"
 					:events="events"
@@ -258,6 +259,7 @@ export default {
 		});
 		lazyAMapApiLoaderInstance.load().then(function() {
 			_this.$refs.map.$$getInstance().add(flexibleLayer);
+			_this.mapLimitBounds();
 		});
 		const showHelp = localStorage.getItem("signp-145:showHelp");
 		if (!showHelp) this.showHelp = true;
@@ -285,7 +287,7 @@ export default {
 				}
 				this.loadArticles();
 				this.loadWeather();
-				this.loadPolygons();
+				// this.loadPolygons();
 			},
 			immediate: true
 		},
@@ -333,44 +335,7 @@ export default {
 					image: require("@/assets/b3.png")
 				}
 			],
-			banner: [
-				// {
-				// 	img: require("@/assets/banner1.png"),
-				// 	title: "",
-				// 	link: "about",
-				// 	mapGid: ""
-				// },
-				// {
-				// 	img: require("@/assets/banner2.png"),
-				// 	title: "",
-				// 	link: "details",
-				// 	mapGid: "1403_3"
-				// },
-				// {
-				// 	img: require("@/assets/banner3.png"),
-				// 	title: "",
-				// 	link: "details",
-				// 	mapGid: "1403_8"
-				// },
-				// {
-				// 	img: require("@/assets/banner4.png"),
-				// 	title: "",
-				// 	link: "details",
-				// 	mapGid: "1403_6"
-				// },
-				// {
-				// 	img: require("@/assets/banner5.png"),
-				// 	title: "",
-				// 	link: "details",
-				// 	mapGid: "1403_5"
-				// },
-				// {
-				// 	img: require("@/assets/banner6.png"),
-				// 	title: "",
-				// 	link: "details",
-				// 	mapGid: "1403_12"
-				// }
-			],
+			banner: [],
 			amapManager: new AMapManager(),
 			zoom: 16,
 			center: self.$store.state.startPointInfo.center.split(","),
@@ -378,6 +343,10 @@ export default {
 			lat: 0,
 			events: {},
 			amapPosition: false,
+			mapBounds: {
+				16: [[0, 0], [23.109626, 0]],
+				15: "113.257626, 23.112409;113.271102, 23.121921"
+			},
 			plugin: [
 				{
 					pName: "Geolocation",
@@ -401,6 +370,19 @@ export default {
 		};
 	},
 	methods: {
+		mapLimitBounds() {
+			const bounds = new window.AMap.Bounds(
+				new window.AMap.LngLat(
+					this.$store.state.mapBounds.southWest[0],
+					this.$store.state.mapBounds.southWest[1]
+				),
+				new window.AMap.LngLat(
+					this.$store.state.mapBounds.northEast[0],
+					this.$store.state.mapBounds.northEast[1]
+				)
+			);
+			this.$refs.map.$$getInstance().setLimitBounds(bounds);
+		},
 		getWeek() {
 			const weekDay = [
 				this.$t("week7"),

@@ -22,7 +22,12 @@ export default new Vuex.Store({
 		searchKeywords: null,
 		currentRoute: null,
 		socketMessage: null,
-		userId: "" + new Date().getTime()
+		userId: "" + new Date().getTime(),
+		mapBounds: {
+			northEast: [113.279105, 23.127427],
+			southWest: [113.249451, 23.106942]
+		},
+		mapZooms: [15, 17]
 	},
 	mutations: {
 		SOCKET_new_msg(state, value) {

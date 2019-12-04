@@ -25,6 +25,7 @@
 								vid="amap"
 								:amap-manager="amapManager"
 								:center="center"
+								:zooms="$store.state.mapZooms"
 								:zoom="zoom"
 								:plugin="plugin"
 								:events="events"
@@ -115,7 +116,7 @@ export default {
 			markerOffset: [0, 0],
 			markerList: [],
 			amapManager: new AMapManager(),
-			zoom: 17,
+			zoom: 16,
 			center: [],
 			lng: 0,
 			lat: 0,
@@ -192,6 +193,7 @@ export default {
 		});
 		lazyAMapApiLoaderInstance.load().then(function() {
 			_this.$refs.map.$$getInstance().add(flexibleLayer);
+			_this.mapLimitBounds();
 		});
 		this.center = this.changePoint(this.surrounding.point);
 		this.search();
@@ -202,6 +204,19 @@ export default {
 		}
 	},
 	methods: {
+		mapLimitBounds() {
+			const bounds = new window.AMap.Bounds(
+				new window.AMap.LngLat(
+					this.$store.state.mapBounds.southWest[0],
+					this.$store.state.mapBounds.southWest[1]
+				),
+				new window.AMap.LngLat(
+					this.$store.state.mapBounds.northEast[0],
+					this.$store.state.mapBounds.northEast[1]
+				)
+			);
+			this.$refs.map.$$getInstance().setLimitBounds(bounds);
+		},
 		search() {
 			const _this = this;
 			let keywords = this.$store.state.surrounding.keywords;

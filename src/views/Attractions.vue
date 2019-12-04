@@ -8,6 +8,7 @@
 					vid="amap"
 					:amap-manager="amapManager"
 					:center="center"
+					:zooms="$store.state.mapZooms"
 					:zoom="zoom"
 					:plugin="plugin"
 					:events="events"
@@ -144,6 +145,7 @@ export default {
 		});
 		lazyAMapApiLoaderInstance.load().then(function() {
 			_this.$refs.map.$$getInstance().add(flexibleLayer);
+			_this.mapLimitBounds();
 		});
 	},
 	computed: {
@@ -192,6 +194,19 @@ export default {
 		};
 	},
 	methods: {
+		mapLimitBounds() {
+			const bounds = new window.AMap.Bounds(
+				new window.AMap.LngLat(
+					this.$store.state.mapBounds.southWest[0],
+					this.$store.state.mapBounds.southWest[1]
+				),
+				new window.AMap.LngLat(
+					this.$store.state.mapBounds.northEast[0],
+					this.$store.state.mapBounds.northEast[1]
+				)
+			);
+			this.$refs.map.$$getInstance().setLimitBounds(bounds);
+		},
 		initData() {
 			const _this = this;
 			const initFunc = [this.loadDetails, this.loadAddress, this.loadPolygons];

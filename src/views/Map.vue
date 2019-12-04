@@ -29,6 +29,7 @@
 					vid="amap"
 					:amap-manager="amapManager"
 					:center="center"
+					:zooms="$store.state.mapZooms"
 					:zoom="zoom"
 					:plugin="plugin"
 					:events="events"
@@ -131,6 +132,7 @@ export default {
 		});
 		lazyAMapApiLoaderInstance.load().then(function() {
 			_this.$refs.map.$$getInstance().add(flexibleLayer);
+			_this.mapLimitBounds();
 		});
 	},
 	computed: {
@@ -163,7 +165,7 @@ export default {
 			addressUpdate: false,
 			address: {},
 			amapManager: new AMapManager(),
-			zoom: 17,
+			zoom: 16,
 			center: self.$store.state.startPointInfo.center.split(","),
 			lng: 0,
 			lat: 0,
@@ -196,8 +198,18 @@ export default {
 		};
 	},
 	methods: {
-		mapSuccess(e) {
-			console.log("mapSuccess", e);
+		mapLimitBounds() {
+			const bounds = new window.AMap.Bounds(
+				new window.AMap.LngLat(
+					this.$store.state.mapBounds.southWest[0],
+					this.$store.state.mapBounds.southWest[1]
+				),
+				new window.AMap.LngLat(
+					this.$store.state.mapBounds.northEast[0],
+					this.$store.state.mapBounds.northEast[1]
+				)
+			);
+			this.$refs.map.$$getInstance().setLimitBounds(bounds);
 		},
 		loadPolygons() {
 			const _this = this;
