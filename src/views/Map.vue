@@ -29,7 +29,7 @@
 					vid="amap"
 					:amap-manager="amapManager"
 					:center="center"
-					:zooms="$store.state.mapZooms"
+					:zooms="[16, 17]"
 					:zoom="zoom"
 					:plugin="plugin"
 					:events="events"
@@ -176,25 +176,7 @@ export default {
 				}
 			},
 			amapPosition: false,
-			plugin: [
-				{
-					pName: "Geolocation",
-					events: {
-						init() {
-							// o 是高德地图定位插件实例
-							// o.getCurrentPosition((status, result) => {
-							// 	if (result && result.position) {
-							// 		self.lng = result.position.lng;
-							// 		self.lat = result.position.lat;
-							// 		self.center = [self.lng, self.lat];
-							// 		self.amapPosition = true;
-							// 		self.$nextTick();
-							// 	}
-							// });
-						}
-					}
-				}
-			]
+			plugin: []
 		};
 	},
 	methods: {

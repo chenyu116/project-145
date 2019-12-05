@@ -427,8 +427,10 @@ export default {
 								return _this
 									.getPolygonAddress(_p.point, geocoder)
 									.then(function(resp) {
-										_p["add-" + lang] = resp;
-										_this.address[_p.map_gid] = _p;
+										if (resp) {
+											_p["add-" + lang] = resp;
+											_this.address[_p.map_gid] = _p;
+										}
 									});
 							},
 							{ concurrency: 3 }
@@ -456,9 +458,9 @@ export default {
 			});
 		},
 		getPolygonAddress(lngLat, geocoder) {
-			return new Promise(function(resolve, reject) {
+			return new Promise(function(resolve) {
 				const addressTimeout = setTimeout(function() {
-					reject();
+					resolve();
 				}, 5000);
 				geocoder.getAddress(lngLat, function(status, result) {
 					if (status === "complete" && result.info === "OK") {

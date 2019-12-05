@@ -1,74 +1,86 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "../store";
-
+import Details from "../views/Details.vue";
+import Route from "../views/Route.vue";
+import Map from "../views/Map.vue";
+import AttractionSurrounding from "../views/AttractionSurrounding.vue";
+import Surrounding from "../views/Surrounding.vue";
+import Search from "../views/Search.vue";
+import About from "../views/About.vue";
+import Article from "../views/Article.vue";
+import Attractions from "../views/Attractions.vue";
+import Vr from "../views/Vr.vue";
+import Recommend from "../views/Recommend.vue";
+import Help from "../views/Help.vue";
+import Home from "../views/Home.vue";
 Vue.use(VueRouter);
 
 const routes = [
 	{
 		path: "/details/:map_gid",
 		name: "details",
-		component: () => import("../views/Details.vue")
+		component: Details
 	},
 	{
 		path: "/route",
 		name: "route",
-		component: () => import("../views/Route.vue")
+		component: Route
 	},
 	{
 		path: "/map",
 		name: "map",
-		component: () => import("../views/Map.vue")
+		component: Map
 	},
 	{
 		path: "/attractionSurrounding",
 		name: "attractionSurrounding",
-		component: () => import("../views/AttractionSurrounding.vue")
+		component: AttractionSurrounding
 	},
 	{
 		path: "/surrounding",
 		name: "surrounding",
-		component: () => import("../views/Surrounding.vue")
+		component: Surrounding
 	},
 	{
 		path: "/search",
 		name: "search",
-		component: () => import("../views/Search.vue")
+		component: Search
 	},
 	{
 		path: "/about",
 		name: "about",
-		component: () => import("../views/About.vue")
+		component: About
 	},
 	{
 		path: "/article/:id",
 		name: "article",
-		component: () => import("../views/Article.vue")
+		component: Article
 	},
 	{
 		path: "/attractions",
 		name: "attractions",
-		component: () => import("../views/Attractions.vue")
+		component: Attractions
 	},
 	{
 		path: "/vr",
 		name: "vr",
-		component: () => import("../views/Vr.vue")
+		component: Vr
 	},
 	{
 		path: "/recommend",
 		name: "recommend",
-		component: () => import("../views/Recommend.vue")
+		component: Recommend
 	},
 	{
 		path: "/help",
 		name: "help",
-		component: () => import("../views/Help.vue")
+		component: Help
 	},
 	{
 		path: "/",
 		name: "home",
-		component: () => import("../views/Home.vue")
+		component: Home
 	}
 ];
 
