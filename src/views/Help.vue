@@ -26,9 +26,17 @@
 							<v-list-item-content>
 								<v-list-item-title>{{ $t(item.text) }}</v-list-item-title>
 							</v-list-item-content>
-							<v-list-item-action class="subtitle-2">{{
-								item.sub
-							}}</v-list-item-action>
+							<v-list-item-action class="subtitle-2"
+								>{{ item.sub }}
+							</v-list-item-action>
+							<v-list-item-icon v-if="item.qrcode">
+								<img
+									:src="ossHost + item.qrcode"
+									width="40"
+									height="40"
+									preview="0"
+								/>
+							</v-list-item-icon>
 						</v-list-item>
 					</template>
 					<v-subheader
@@ -51,7 +59,8 @@ export default {
 					text: "wechatNumber",
 					icon: "fa-comments",
 					color: "indigo",
-					sub: "海珠广场"
+					sub: "越秀区",
+					qrcode: "project/145/wechatQrcode.png"
 				},
 				{
 					text: "travelAdvisory",
@@ -97,6 +106,9 @@ export default {
 				}
 			]
 		};
+	},
+	mounted() {
+		this.$previewRefresh();
 	},
 	methods: {}
 };
