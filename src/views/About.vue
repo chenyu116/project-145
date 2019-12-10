@@ -20,12 +20,6 @@
 					>
 						<v-icon dense="">fa-times</v-icon>
 					</v-btn>
-					<!-- <div
-						id="panorama"
-						:style="
-							`height:${$store.state.windowHeight}px;width:${$store.state.windowWidth}px;`
-						"
-					></div> -->
 					<v-pannellum
 						:style="
 							`height:${$store.state.windowHeight}px;width:${$store.state.windowWidth}px;`
@@ -48,19 +42,83 @@
 								>
 								<v-divider></v-divider>
 								<v-col cols="12" v-show="panorama.length > 0">
-									<v-card-subtitle class="subtitle-1 font-weight-bold"
-										><v-icon left dense="" color="lime lighten-3"
-											>fa-bookmark</v-icon
-										>{{ $t("panorama360") }}</v-card-subtitle
-									>
-									<template v-for="(item, index) in panorama">
-										<img
-											:key="index"
-											:src="ossHost + item"
-											class="point-details-gallery-panorama"
-											@click="showPanoramaView(item)"
-										/>
-									</template>
+									<v-card color="white" flat="" tile="">
+										<v-card-subtitle class="subtitle-1 font-weight-bold"
+											><v-icon left dense="" color="lime lighten-3"
+												>fa-bookmark</v-icon
+											>{{ $t("panorama360") }}</v-card-subtitle
+										>
+										<template v-for="(item, index) in panorama">
+											<img
+												:key="index"
+												:src="ossHost + item"
+												class="point-details-gallery-panorama"
+												@click="showPanoramaView(item)"
+											/>
+										</template>
+									</v-card>
+									<v-divider class=" lime darken-1"></v-divider>
+								</v-col>
+								<v-col cols="12" v-show="images.length > 0">
+									<v-card color="white" flat="" tile="">
+										<v-card-subtitle class="subtitle-1 font-weight-bold"
+											><v-icon left dense="" color="lime lighten-3"
+												>fa-bookmark</v-icon
+											>{{ $t("album") }}</v-card-subtitle
+										>
+										<template v-for="(item, index) in images">
+											<img
+												:key="index"
+												:src="ossHost + item"
+												preview="0"
+												class="point-details-gallery-img"
+											/>
+										</template>
+									</v-card>
+									<v-divider class=" lime darken-1"></v-divider>
+								</v-col>
+								<v-col cols="12" v-if="details.article_voice">
+									<v-card color="white" flat="">
+										<v-card-subtitle class="subtitle-1  font-weight-bold"
+											><v-icon left dense="" color="lime lighten-3"
+												>fa-bookmark</v-icon
+											>{{ $t("voiceIntro") }}</v-card-subtitle
+										>
+										<v-card-text>
+											<v-row no-gutters="" justify="center">
+												<audio
+													id="audioIntro"
+													:src="ossHost + details.article_voice"
+													preload=""
+													controls
+												/>
+											</v-row>
+										</v-card-text>
+									</v-card>
+									<v-divider class=" lime darken-1"></v-divider>
+								</v-col>
+								<v-col cols="12" v-if="details.article_video">
+									<v-card color="white" flat="">
+										<v-card-subtitle class="subtitle-1  font-weight-bold"
+											><v-icon left dense="" color="lime lighten-3"
+												>fa-bookmark</v-icon
+											>{{ $t("videoIntro") }}</v-card-subtitle
+										>
+										<v-card-text>
+											<v-row no-gutters="" justify="center">
+												<video
+													id="videoIntro"
+													:src="ossHost + details.article_video"
+													height="200"
+													:width="$store.state.windowWidth - 52"
+													:autoplay="false"
+													:preload="false"
+													controls
+												></video>
+											</v-row>
+										</v-card-text>
+									</v-card>
+									<v-divider class=" lime darken-1"></v-divider>
 								</v-col>
 								<v-card-subtitle class="subtitle-1 font-weight-bold"
 									><v-icon left dense="" color="lime lighten-3"
@@ -132,6 +190,7 @@ export default {
 			details: {},
 			showPanorama: "",
 			panorama: [],
+			images: [],
 			panoramaFullScreen: false
 		};
 	},
@@ -149,20 +208,27 @@ export default {
 				const nowTime = new Date().getTime();
 				if (r && r.timestamp > nowTime) {
 					_this.details = r.val;
-					_this.loadDetails(_this.$store.state.startPointInfo.main_map_gid);
+					if (_this.details.article_panorama) {
+						_this.panorama = _this.details.article_panorama.split(",");
+					}
+					if (_this.details.article_images) {
+						_this.images = _this.details.article_images.split(",");
+					}
+					_this.loading.content = false;
+					_this.$previewRefresh();
 				} else {
 					_this.$http
 						.get(_this.apiHost + "/article", {
 							params: {
 								id: id,
 								project_id: _this.$store.state.startPointInfo.project_id,
-								timestamp: parseInt(new Date().getTime() / 1000)
+								timestamp: parseInt(nowTime / 1000)
 							}
 						})
 						.then(
 							function(resp) {
 								if (resp.status === 200 && resp.body) {
-									const timestamp = new Date().getTime() + 300 * 1000;
+									const timestamp = nowTime + 300 * 1000;
 									const writeStore = _this.$store.state.db
 										.transaction("article", "readwrite")
 										.objectStore("article");
@@ -172,9 +238,14 @@ export default {
 										val: resp.body
 									});
 									_this.details = resp.body;
-									_this.loadDetails(
-										_this.$store.state.startPointInfo.main_map_gid
-									);
+									if (_this.details.article_panorama) {
+										_this.panorama = _this.details.article_panorama.split(",");
+									}
+									if (_this.details.article_images) {
+										_this.images = _this.details.article_images.split(",");
+									}
+									_this.loading.content = false;
+									_this.$previewRefresh();
 								} else {
 									_this.loading.fail = true;
 								}
@@ -186,64 +257,6 @@ export default {
 						);
 				}
 			};
-		},
-		loadDetails(id) {
-			const _this = this;
-			_this.loading.fail = false;
-			const readStore = _this.$store.state.db
-				.transaction("mapPolygons")
-				.objectStore("mapPolygons")
-				.get(id);
-			readStore.onsuccess = function(e) {
-				const r = e.target.result;
-				if (r && r.map_polygon_details_content) {
-					for (let i in r) {
-						if (i.indexOf("map_polygon_details") === 0) {
-							_this.$set(_this.details, i, r[i]);
-						}
-					}
-					_this.loading.content = false;
-				} else {
-					_this.loadDescription(id);
-				}
-			};
-			readStore.onerror = function() {
-				_this.loading.fail = true;
-			};
-		},
-		loadDescription(id) {
-			this.loading.content = true;
-			const _this = this;
-			_this.$http
-				.get(_this.apiHost + "/polygon/details", {
-					params: {
-						map_gid: id,
-						project_id: _this.$store.state.startPointInfo.project_id,
-						timestamp: parseInt(new Date().getTime() / 1000)
-					}
-				})
-				.then(
-					function(resp) {
-						if (resp.status === 200 && resp.body) {
-							for (let i in resp.body) {
-								if (i.indexOf("map_polygon_details") === 0) {
-									if (
-										i === "map_polygon_details_voice" ||
-										i === "map_polygon_details_content"
-									) {
-										_this.$set(_this.details, i, JSON.parse(resp.body[i]));
-									} else {
-										_this.$set(_this.details, i, resp.body[i]);
-									}
-								}
-							}
-						}
-						_this.loading.content = false;
-					},
-					function() {
-						_this.loading.content = false;
-					}
-				);
 		},
 		showPanoramaView(image) {
 			this.showPanorama = this.ossHost + image + "?v=" + new Date().getTime();
@@ -280,9 +293,14 @@ export default {
 }
 </style>
 <style scoped>
+.point-details-gallery-img {
+	width: 5em;
+	height: 5em;
+	margin-left: 0.8em;
+}
 .point-details-gallery-panorama {
-	width: 6em;
-	height: 3.5em;
+	width: 7em;
+	height: 4em;
 	margin-left: 0.8em;
 }
 </style>

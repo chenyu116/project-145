@@ -195,6 +195,24 @@ export default {
 				this.errMsg = this.$t("needKeywords");
 				return;
 			}
+			this.$http.put(
+				this.apiHost + "/project/spm",
+				{
+					type: "search",
+					content: JSON.stringify({
+						keywords: _this.keywords,
+						locale: _this.$i18n.locale,
+						agent: _this.$store.state.navigator.userAgent
+					}),
+					contentType: "json",
+					tag: _this.$store.state.userId,
+					projectID: _this.$store.state.startPointInfo.project_id,
+					timestamp: parseInt(new Date().getTime() / 1000)
+				},
+				{
+					emulateJSON: false
+				}
+			);
 			this.$store.commit("updateSearchKeywords", this.keywords);
 			this.errMsg = "";
 			this.loading.searching = true;
@@ -218,7 +236,6 @@ export default {
 							currentPoint,
 							5000,
 							function(status, result) {
-								console.log(result);
 								if (
 									result.info === "OK" &&
 									result.poiList &&

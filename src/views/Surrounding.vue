@@ -232,6 +232,24 @@ export default {
 				pageSize: this.pageSize,
 				lang: lang
 			});
+			this.$http.put(
+				this.apiHost + "/project/spm",
+				{
+					type: "search",
+					content: JSON.stringify({
+						keywords: _keywords,
+						locale: _this.$i18n.locale,
+						agent: _this.$store.state.navigator.userAgent
+					}),
+					contentType: "json",
+					tag: _this.$store.state.userId,
+					projectID: _this.$store.state.startPointInfo.project_id,
+					timestamp: parseInt(new Date().getTime() / 1000)
+				},
+				{
+					emulateJSON: false
+				}
+			);
 			window.AMap.plugin("AMap.Geolocation", function() {
 				const geolocation = new window.AMap.Geolocation();
 				geolocation.getCurrentPosition(function(status, result) {

@@ -223,6 +223,24 @@ export default {
 			if (keywords === "subway") {
 				keywords = "地铁";
 			}
+			this.$http.put(
+				this.apiHost + "/project/spm",
+				{
+					type: "search",
+					content: JSON.stringify({
+						keywords: keywords,
+						locale: _this.$i18n.locale,
+						agent: _this.$store.state.navigator.userAgent
+					}),
+					contentType: "json",
+					tag: _this.$store.state.userId,
+					projectID: _this.$store.state.startPointInfo.project_id,
+					timestamp: parseInt(new Date().getTime() / 1000)
+				},
+				{
+					emulateJSON: false
+				}
+			);
 			this.errMsg = "";
 			const lang = this.$i18n.locale === "zh_CN" ? "zh_cn" : "en";
 			const placeSearch = new window.AMap.PlaceSearch({
