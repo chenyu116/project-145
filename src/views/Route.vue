@@ -262,6 +262,7 @@ export default {
 				_this.currentDetails.lnglat,
 				function(status, result) {
 					if (
+						result.info &&
 						result.info.toLowerCase() === "ok" &&
 						result.routes &&
 						result.routes[0]

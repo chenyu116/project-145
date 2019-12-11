@@ -470,12 +470,12 @@ export default {
 				.get(_this.bannerType);
 			readStore.onsuccess = function(e) {
 				const banner = [
-					{
-						img: require("@/assets/banner1.jpg"),
-						title: "",
-						link: "about",
-						mapGid: ""
-					}
+					// {
+					// 	img: require("@/assets/banner1.jpg"),
+					// 	title: "",
+					// 	link: "about",
+					// 	mapGid: ""
+					// }
 				];
 				const r = e.target.result;
 				const nowTime = new Date().getTime();

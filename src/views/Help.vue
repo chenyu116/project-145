@@ -59,7 +59,7 @@ export default {
 					text: "wechatNumber",
 					icon: "fa-comments",
 					color: "indigo",
-					sub: "越秀区",
+					sub: "广州越秀文体",
 					qrcode: "project/145/wechatQrcode.png"
 				},
 				{
