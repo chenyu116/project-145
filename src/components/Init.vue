@@ -430,6 +430,7 @@ export default {
 										if (resp) {
 											_p["add-" + lang] = resp;
 											_this.address[_p.map_gid] = _p;
+											console.log(_p.map_gid, _p.point);
 										}
 									});
 							},
@@ -463,10 +464,29 @@ export default {
 					resolve();
 				}, 5000);
 				geocoder.getAddress(lngLat, function(status, result) {
+					// console.log(
+					// 	addr.province +
+					// 		addr.city +
+					// 		addr.district +
+					// 		addr.street +
+					// 		addr.streetNumber
+					// );
+					// console.log(result.regeocode.addressComponent);
 					if (status === "complete" && result.info === "OK") {
 						clearTimeout(addressTimeout);
-						if (result && result.regeocode) {
-							resolve(result.regeocode.formattedAddress);
+						if (
+							result &&
+							result.regeocode &&
+							result.regeocode.addressComponent
+						) {
+							const addr = result.regeocode.addressComponent;
+							resolve(
+								addr.province +
+									addr.city +
+									addr.district +
+									addr.street +
+									addr.streetNumber
+							);
 						}
 					}
 				});
@@ -480,7 +500,7 @@ export default {
 						_this.$wechat.wx.startRecord();
 						setTimeout(function() {
 							_this.$wechat.wx.stopRecord();
-						}, 1000);
+						}, 2000);
 						_this.finished++;
 						resolve();
 					});
