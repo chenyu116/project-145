@@ -16,6 +16,7 @@ import VuePannellum from "vue-pannellum";
 import HeaderWithBack from "@/components/HeaderWithBack.vue";
 import WechatJSSDK from "wechat-jssdk/dist/client.umd";
 import VueSocketIO from "vue-socket.io";
+import Confirm from "./plugins/confirm";
 import "./scss/variables.scss";
 Vue.config.productionTip = false;
 const apiHost = "https://api.signp.cn/v2";
@@ -92,6 +93,7 @@ vueSocketIO.io.on("connect", function() {
 	);
 });
 Vue.use(vueSocketIO);
+Vue.use(Confirm);
 const i18n = new VueI18n({
 	locale: "zh_CN" || "en_US",
 	fallbackLocale: "zh_CN" || "en_US",

@@ -65,29 +65,30 @@ export default {
 		msg: {}
 	}),
 	mounted() {
-		// const u = this.$store.state.navigator.userAgent;
-		// let isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1;
-		// if (isAndroid) {
-		this.pushHistory();
-		//监听浏览器返回事件和手机物理返回键,调用history.back()、history.forward()、history.go()方法也会触发,所以当前页面中的JavaScript代码不能有这几个方法的调用
-		window.addEventListener("popstate", this.checkBack, false);
-		// }
-
-		//向历史记录栈中添加一条记录
+		const u = this.$store.state.navigator.userAgent;
+		let isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1;
+		if (isAndroid) {
+			this.pushHistory();
+			window.addEventListener("popstate", this.checkBack, false);
+		}
 	},
 	methods: {
 		checkBack() {
-			if (confirm("确定返回?")) {
-				return;
-			}
-			this.pushHistory();
+			const _this = this;
+			_this.pushHistory();
+			this.$confirm({
+				title: "确定离开",
+				callback: function() {
+					_this.$wechat.wx.closeWindow();
+				}
+			});
 		},
 		pushHistory() {
 			const state = {
 				title: "title",
 				url: "#"
 			};
-			window.history.pushState(state, "title", "/");
+			window.history.pushState(state, "title", "#/");
 		},
 		onResize() {
 			this.$store.commit("updateWindowWidth", window.innerWidth);
