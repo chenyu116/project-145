@@ -126,7 +126,7 @@
 											>
 												<v-carousel-item v-for="(item, i) in articles" :key="i">
 													<div @click="navPage('article/' + item.article_id)">
-														<span class="overline">2019/11/9</span>
+														<span class="overline">{{ item.date }}</span>
 														{{ item.article_title }}
 													</div>
 												</v-carousel-item>
@@ -426,6 +426,9 @@ export default {
 				const nowTime = new Date().getTime();
 				if (r && r.timestamp > nowTime && r.val.length > 0) {
 					for (let i = 0; i < r.val.length; i++) {
+						let _d = new Date(parseInt(r.val[i].article_create_at) * 1000);
+						r.val[i].date =
+							_d.getFullYear() + "/" + (_d.getMonth() + 1) + "/" + _d.getDate();
 						_this.articles.push(r.val[i]);
 					}
 				} else {
@@ -435,6 +438,7 @@ export default {
 								categoryID:
 									_this.$store.state.startPointInfo.index_article_category,
 								locale: _this.$i18n.locale,
+								limit: _this.$store.state.startPointInfo.articleLimit,
 								projectID: _this.$store.state.startPointInfo.project_id,
 								timestamp: parseInt(new Date().getTime() / 1000)
 							}
@@ -454,6 +458,15 @@ export default {
 									val: resp.body
 								});
 								for (let i = 0; i < resp.body.length; i++) {
+									let _d = new Date(
+										parseInt(resp.body[i].article_create_at) * 1000
+									);
+									resp.body[i].date =
+										_d.getFullYear() +
+										"/" +
+										(_d.getMonth() + 1) +
+										"/" +
+										_d.getDate();
 									_this.articles.push(resp.body[i]);
 								}
 							}

@@ -101,7 +101,7 @@ export default {
 							clearInterval(initInterval);
 							setTimeout(function() {
 								_this.$store.commit("updateDataLoaded", true);
-								_this.$router.replace("/");
+								// _this.$router.replace("/");
 							}, 600);
 						})
 						.catch(function(err) {
@@ -430,7 +430,6 @@ export default {
 										if (resp) {
 											_p["add-" + lang] = resp;
 											_this.address[_p.map_gid] = _p;
-											console.log(_p.map_gid, _p.point);
 										}
 									});
 							},

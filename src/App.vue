@@ -86,9 +86,9 @@ export default {
 		pushHistory() {
 			const state = {
 				title: "title",
-				url: "#"
+				url: window.location.href
 			};
-			window.history.pushState(state, "title", "#/");
+			window.history.pushState(state, state.title, state.url);
 		},
 		onResize() {
 			this.$store.commit("updateWindowWidth", window.innerWidth);
