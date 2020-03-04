@@ -71,7 +71,7 @@
 								<v-carousel-item v-for="(b, i) in banner" :key="i">
 									<v-card flat="">
 										<v-img
-											@click="bannerClick(b)"
+											@click="bannerClick(b, i)"
 											:src="b.img"
 											:height="bannerHeight"
 											background-color="white"
@@ -593,7 +593,33 @@ export default {
 		navPage(path) {
 			this.$router.replace("/" + path);
 		},
-		bannerClick(item) {
+		bannerClick(item, index) {
+			if (index === 0) {
+				location.href =
+					"https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5MDYyNjMxNg==&scene=124#wechat_redirect";
+				return;
+			}
+			if (index === 1) {
+				location.href = "http://t.cn/A6P1xu21";
+				return;
+			}
+			if (index === 2) {
+				location.href = "https://vp.fact.qq.com/home?ADTAG=xw-1.jz";
+				return;
+			}
+			if (index === 3) {
+				location.href =
+					"https://promo.guahao.com/topic/pneumonia?_cp=jiaotong_zh&cs=share";
+				return;
+			}
+			if (index === 4) {
+				location.href = "https://mp.weixin.qq.com/s/2biZ2Jdkb-oar1PjMXl4gg";
+				return;
+			}
+			if (index === 5) {
+				this.navPage("article/965");
+				return;
+			}
 			if (!item.link) return;
 			this.$router.replace({ path: "/" + item.link + "/" + item.mapGid });
 		},

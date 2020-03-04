@@ -11,7 +11,7 @@
 								<v-divider></v-divider>
 								<v-card-text
 									v-html="details.article_content"
-									class="r-content subtitle-1"
+									class="article-content subtitle-1"
 								></v-card-text> </v-skeleton-loader
 						></template>
 					</v-card>
@@ -116,7 +116,7 @@ export default {
 };
 </script>
 <style>
-.r-content img {
-	width: 100% !important;
+.article-content img {
+	max-width: 100% !important;
 }
 </style>

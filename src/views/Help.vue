@@ -34,7 +34,7 @@
 									:src="ossHost + item.qrcode"
 									width="40"
 									height="40"
-									preview="0"
+									:preview="index"
 								/>
 							</v-list-item-icon>
 						</v-list-item>
@@ -55,6 +55,13 @@ export default {
 	data() {
 		return {
 			list: [
+				{
+					text: "广州越秀发布",
+					icon: "fa-comments",
+					color: "indigo",
+					sub: "",
+					qrcode: "project/145/yuexiufabu.png"
+				},
 				{
 					text: "wechatNumber",
 					icon: "fa-comments",
