@@ -21,16 +21,14 @@
 				"
 			/>
 		</div>
-		<v-col cols="12">
-			<v-app-bar color="white" fixed="" flat="" dense="">
+
+		<v-col cols="12" class="bg">
+			<v-app-bar color="rgba(0, 0, 0, 0.2)" dark="" flat="" dense="">
 				<v-toolbar-title class="subtitle-1"
 					><v-icon left="" dense="" color="primary">fa-map-marker-alt</v-icon
 					>{{ $t($store.state.startPointInfo.name) }}</v-toolbar-title
 				>
 				<v-spacer></v-spacer>
-				<v-btn icon to="/search" replace="">
-					<v-icon>fa-search</v-icon>
-				</v-btn>
 
 				<v-menu offset-y bottom>
 					<template v-slot:activator="{ on }">
@@ -50,7 +48,79 @@
 					</v-list>
 				</v-menu>
 			</v-app-bar>
+			<v-row no-gutters="" align="end" justify="center" style="height: 91%;">
+				<v-card elevation="0" tile="" width="100%" class="round">
+					<v-card
+						elevation="0"
+						tile=""
+						width="100%"
+						class="roundBorder"
+						:style="`border-top: 2px solid ${separatorColor}`"
+					>
+						<!-- <div class="round"><v-divider class="roundBg"></v-divider></div> -->
+						<v-bottom-navigation
+							background-color="rgba(0, 0, 0, 0)"
+							grow
+							color="teal"
+							class=" elevation-0"
+							dark
+						>
+							<template
+								v-for="(item, index) in bottomNav1"
+								@click="navPage(item.text)"
+							>
+								<v-divider
+									:key="`divider-${index}`"
+									v-if="index > 0"
+									inset
+									vertical
+									class="mt-4"
+									:style="`border-color: ${separatorColor} !important`"
+								></v-divider>
+								<v-btn :key="`btn-${item.text}`">
+									<span :class="`white--text mb-1 ${navFont}`">{{
+										$t(item.text)
+									}}</span>
+									<v-img :src="item.image" width="40" contain=""></v-img>
+								</v-btn>
+							</template>
+						</v-bottom-navigation>
+						<v-divider
+							dark=""
+							:style="`border-color: ${separatorColor} !important`"
+						></v-divider>
+						<v-bottom-navigation
+							background-color="rgba(0, 0, 0, 0)"
+							dark=""
+							grow
+							color="teal"
+							class=" elevation-0 mb-1"
+						>
+							<template
+								v-for="(item, index) in bottomNav2"
+								@click="navPage(item.text)"
+							>
+								<v-divider
+									:key="`divider-${index}`"
+									v-if="index > 0"
+									inset
+									vertical
+									class="mt-0"
+									:style="`border-color: ${separatorColor} !important`"
+								></v-divider>
+								<v-btn :key="`btn-${item.text}`">
+									<span :class="`white--text ${navFont}`">{{
+										$t(item.text)
+									}}</span>
+									<v-img :src="item.image" width="40" contain=""></v-img>
+								</v-btn>
+							</template>
+						</v-bottom-navigation>
+					</v-card>
+				</v-card>
+			</v-row>
 		</v-col>
+
 		<v-col cols="12" class="mt-10">
 			<v-card elevation="2" tile="">
 				<v-container>
@@ -300,6 +370,7 @@ export default {
 	data() {
 		let self = this;
 		return {
+			separatorColor: "rgba(255,255,255,0.3)",
 			showHelp: false,
 			bannerType: "round",
 			articles: [],
@@ -309,7 +380,7 @@ export default {
 			markerOffset: [0, 0],
 			markerList: [],
 			weatherString: "",
-			bottomNav: [
+			bottomNav1: [
 				{
 					text: "attractions",
 					image: require("@/assets/b1.png")
@@ -325,7 +396,9 @@ export default {
 				{
 					text: "recommend",
 					image: require("@/assets/b2.png")
-				},
+				}
+			],
+			bottomNav2: [
 				{
 					text: "help",
 					image: require("@/assets/b4.png")
@@ -333,6 +406,14 @@ export default {
 				{
 					text: "surrounding",
 					image: require("@/assets/b3.png")
+				},
+				{
+					text: "about",
+					image: require("@/assets/b6.png")
+				},
+				{
+					text: "recommend",
+					image: require("@/assets/b2.png")
 				}
 			],
 			banner: [],
@@ -670,5 +751,25 @@ export default {
 }
 .amap {
 	width: 100% !important;
+}
+.bg {
+	width: 100%;
+	height: 34em;
+	top: 0;
+	background: url("../assets/homeBg.jpg") no-repeat center center;
+	background-size: cover;
+}
+.round {
+	padding-top: 6px;
+	border-radius: 50% 50% 0 0 !important;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+.roundBorder {
+	padding-top: 30px;
+	border-radius: 50% 50% 0 0 !important;
+	background-color: rgba(0, 0, 0, 0);
+}
+.roundBg {
+	border-radius: 50% 50% 0 0 !important;
 }
 </style>

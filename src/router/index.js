@@ -13,7 +13,7 @@ import Attractions from "../views/Attractions.vue";
 import Vr from "../views/Vr.vue";
 import Recommend from "../views/Recommend.vue";
 import Help from "../views/Help.vue";
-import Home from "../views/Home.vue";
+import Home from "../views/HomeV2.vue";
 Vue.use(VueRouter);
 
 const routes = [
