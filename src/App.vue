@@ -146,4 +146,8 @@ export default {
 .v-skeleton-loader__article {
 	background: rgba(0, 0, 0, 0) !important;
 }
+.v-tabs-bar.v-slide-group--is-overflowing.v-tabs-bar--is-mobile:not(.v-tabs-bar--show-arrows):not(.v-slide-group--has-affixes)
+	.v-slide-group__prev {
+	display: none !important;
+}
 </style>

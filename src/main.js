@@ -18,6 +18,7 @@ import WechatJSSDK from "wechat-jssdk/dist/client.umd";
 import VueSocketIO from "vue-socket.io";
 import Confirm from "./plugins/confirm";
 import "./scss/variables.scss";
+import VueAwesomeSwiper from "vue-awesome-swiper";
 Vue.config.productionTip = false;
 const apiHost = "https://api.signp.cn/v2";
 const ossHost = "https://o.signp.cn/";
@@ -42,6 +43,7 @@ Promise.config({
 window.Promise = Promise;
 Vue.use(preview, { fullscreenEl: false, zoomEl: false });
 Vue.use(VueI18n);
+Vue.use(VueAwesomeSwiper);
 Vue.use(VueResource);
 Vue.use(VueAMap);
 Vue.component("VPannellum", VuePannellum);

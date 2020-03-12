@@ -141,7 +141,7 @@
 			>
 				<v-btn v-if="id > 0" @click="loadArticle(id)" depressed="">
 					<v-icon left dense="">fa-redo</v-icon>
-					<span class="">{{ $t("regry") }}</span>
+					<span class="">{{ $t("retry") }}</span>
 				</v-btn>
 				<p v-if="id === 0">未定义文章信息</p>
 			</v-layout>

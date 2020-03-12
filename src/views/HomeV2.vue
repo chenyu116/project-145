@@ -1,6 +1,6 @@
 <template>
 	<v-row no-gutters="" align="start" id="homeMain">
-		<div style="z-index:99999;position:fixed;" v-if="showHelp"
+		<!-- <div style="z-index:99999;position:fixed;" v-if="showHelp"
 			><v-btn
 				@click="showHelp = false"
 				fixed=""
@@ -20,12 +20,12 @@
 					`height:${$store.state.windowHeight}px;width:${$store.state.windowWidth}px;`
 				"
 			/>
-		</div>
+		</div> -->
 
 		<v-col cols="12" class="bg">
 			<v-app-bar color="rgba(0, 0, 0, 0.2)" dark="" flat="" dense="">
 				<v-toolbar-title class="subtitle-1"
-					><v-icon left="" dense="" color="primary">fa-map-marker-alt</v-icon
+					><v-icon left="" dense="" color="cyan">fa-map-marker-alt</v-icon
 					>{{ $t($store.state.startPointInfo.name) }}</v-toolbar-title
 				>
 				<v-spacer></v-spacer>
@@ -48,27 +48,29 @@
 					</v-list>
 				</v-menu>
 			</v-app-bar>
-			<v-row no-gutters="" align="end" justify="center" style="height: 91%;">
-				<v-card elevation="0" tile="" width="100%" class="round">
-					<v-card
-						elevation="0"
-						tile=""
-						width="100%"
-						class="roundBorder"
-						:style="`border-top: 2px solid ${separatorColor}`"
+			<v-row
+				no-gutters=""
+				justify="center"
+				align="end"
+				style="margin-top: 17.7em;"
+			>
+				<div
+					class="roundBorder"
+					:style="`width:100%;background: rgba(0, 0, 0, 0.5)`"
+				>
+					<div
+						class="roundBorder1"
+						:style="`width:100%;border-top: 2px solid ${separatorColor};`"
 					>
-						<!-- <div class="round"><v-divider class="roundBg"></v-divider></div> -->
 						<v-bottom-navigation
 							background-color="rgba(0, 0, 0, 0)"
 							grow
 							color="teal"
 							class=" elevation-0"
 							dark
+							height="80"
 						>
-							<template
-								v-for="(item, index) in bottomNav1"
-								@click="navPage(item.text)"
-							>
+							<template v-for="(item, index) in bottomNav1">
 								<v-divider
 									:key="`divider-${index}`"
 									v-if="index > 0"
@@ -77,87 +79,99 @@
 									class="mt-4"
 									:style="`border-color: ${separatorColor} !important`"
 								></v-divider>
-								<v-btn :key="`btn-${item.text}`">
+								<v-btn :key="`btn-${item.text}`" @click="navPage(item.text)">
 									<span :class="`white--text mb-1 ${navFont}`">{{
 										$t(item.text)
 									}}</span>
-									<v-img :src="item.image" width="40" contain=""></v-img>
+									<v-img :src="item.image" width="60" contain=""></v-img>
 								</v-btn>
 							</template>
-						</v-bottom-navigation>
-						<v-divider
-							dark=""
-							:style="`border-color: ${separatorColor} !important`"
-						></v-divider>
-						<v-bottom-navigation
-							background-color="rgba(0, 0, 0, 0)"
-							dark=""
-							grow
-							color="teal"
-							class=" elevation-0 mb-1"
-						>
-							<template
-								v-for="(item, index) in bottomNav2"
-								@click="navPage(item.text)"
-							>
-								<v-divider
-									:key="`divider-${index}`"
-									v-if="index > 0"
-									inset
-									vertical
-									class="mt-0"
-									:style="`border-color: ${separatorColor} !important`"
-								></v-divider>
-								<v-btn :key="`btn-${item.text}`">
-									<span :class="`white--text ${navFont}`">{{
-										$t(item.text)
-									}}</span>
-									<v-img :src="item.image" width="40" contain=""></v-img>
-								</v-btn>
-							</template>
-						</v-bottom-navigation>
-					</v-card>
-				</v-card>
+						</v-bottom-navigation> </div
+				></div>
+				<div :style="`width:100%;background: rgba(0, 0, 0, 0.5)`">
+					<v-divider
+						dark=""
+						:style="`border-color: ${separatorColor} !important`"
+					></v-divider>
+					<v-bottom-navigation
+						background-color="rgba(0, 0, 0, 0)"
+						dark=""
+						grow
+						color="teal"
+						class=" elevation-0 mb-1"
+						height="80"
+					>
+						<template v-for="(item, index) in bottomNav2">
+							<v-divider
+								:key="`divider-${index}`"
+								v-if="index > 0"
+								inset
+								vertical
+								class="mt-0"
+								:style="`border-color: ${separatorColor} !important`"
+							></v-divider>
+							<v-btn :key="`btn-${item.text}`" @click="navPage(item.text)">
+								<span :class="`white--text ${navFont}`">{{
+									$t(item.text)
+								}}</span>
+								<v-img :src="item.image" width="60" contain=""></v-img>
+							</v-btn>
+						</template> </v-bottom-navigation
+				></div>
 			</v-row>
 		</v-col>
-
-		<v-col cols="12" class="mt-10">
-			<v-card elevation="2" tile="">
+		<v-col cols="12" class="mt-0">
+			<v-card elevation="0" tile="">
 				<v-container>
-					<v-card elevation="0">
-						<v-skeleton-loader
-							:loading="banner.length === 0"
-							:transition="transition"
-							:height="bannerHeight"
-							type="card"
-						>
-							<v-carousel
-								:height="bannerHeight"
-								cycle=""
-								:show-arrows="false"
-								hide-delimiters
-								:interval="3000"
-							>
-								<v-carousel-item v-for="(b, i) in banner" :key="i">
-									<v-card flat="">
-										<v-img
-											@click="bannerClick(b)"
-											:src="b.img"
-											:height="bannerHeight"
-											background-color="white"
-										></v-img>
-									</v-card>
-								</v-carousel-item>
-							</v-carousel>
-						</v-skeleton-loader>
+					<v-card elevation="0" class="mb-3" tile="">
+						<v-card-title class=" pl-0"
+							><img
+								width="130"
+								:src="require(`@/assets/title-attractions_${$i18n.locale}.png`)"
+						/></v-card-title>
+						<swiper :options="swiperOption">
+							<swiper-slide v-for="(b, i) in banner" :key="i"
+								><v-img :src="b.img" aspect-ratio="1.5"></v-img
+							></swiper-slide>
+						</swiper>
 					</v-card>
-					<v-card elevation="0" class="mt-2" outlined="">
-						<v-row
-							no-gutters=""
-							align="center"
-							justify="center"
-							class="blue lighten-4"
-						>
+					<v-divider style="border-top:1px dashed #ccc"></v-divider>
+					<v-card elevation="0">
+						<v-card-title class=" pl-0"
+							><img
+								:src="require(`@/assets/title-news_${$i18n.locale}.png`)"
+								width="130"
+						/></v-card-title>
+						<v-list three-line>
+							<v-list-item
+								v-for="item in articles"
+								:key="item.article_id"
+								@click="navPage('article/' + item.article_id)"
+							>
+								<v-list-item-content>
+									<v-list-item-subtitle
+										class=" subtitle-2 black--text"
+										v-text="item.article_title"
+									></v-list-item-subtitle>
+									<v-list-item-title class="overline grey--text">{{
+										item.date
+									}}</v-list-item-title>
+								</v-list-item-content>
+
+								<v-list-item-avatar v-if="item.article_icon">
+									<v-img :src="item.article_icon"></v-img>
+								</v-list-item-avatar>
+							</v-list-item>
+						</v-list>
+					</v-card>
+					<v-divider style="border-top:1px dashed #ccc"></v-divider>
+					<v-card elevation="0">
+						<v-card-title class=" pl-0"
+							><img
+								:src="require(`@/assets/title-weather_${$i18n.locale}.png`)"
+								width="130"
+						/></v-card-title>
+						<v-row no-gutters="">
 							<v-col cols="3" class="text-center">
 								<v-card
 									elevation="0"
@@ -172,36 +186,9 @@
 							<v-col cols="9" class="pl-1 white">
 								<v-row no-gutters="" align="start" justify="start"
 									><v-col cols="12"
-										><v-toolbar-title
-											class="subtitle-2 text--darken-1 grey--text"
-										>
+										><span class="subtitle-1 text--darken-1 grey--text">
 											{{ weatherString }}
-										</v-toolbar-title></v-col
-									></v-row
-								>
-								<v-row no-gutters="" class="mt-1"
-									><v-col cols="12">
-										<v-skeleton-loader
-											:loading="articles.length === 0"
-											:transition="transition"
-											max-height="50"
-											type="paragraph"
-											><v-carousel
-												height="52"
-												cycle=""
-												:show-arrows="false"
-												hide-delimiters
-												:interval="5000"
-												class=" overflow-hidden"
-											>
-												<v-carousel-item v-for="(item, i) in articles" :key="i">
-													<div @click="navPage('article/' + item.article_id)">
-														<span class="overline">{{ item.date }}</span>
-														{{ item.article_title }}
-													</div>
-												</v-carousel-item>
-											</v-carousel></v-skeleton-loader
-										></v-col
+										</span></v-col
 									></v-row
 								>
 							</v-col></v-row
@@ -210,72 +197,15 @@
 				</v-container>
 			</v-card>
 		</v-col>
-		<v-col cols="12" class="mt-1">
-			<div
-				class="amap-page-container amap"
-				id="amapHome"
-				:style="`height:${windowHeight - bannerHeight - 226}px`"
-			>
-				<el-amap
-					ref="map"
-					vid="amap"
-					:amap-manager="amapManager"
-					:center="center"
-					:zooms="$store.state.mapZooms"
-					:zoom="zoom"
-					:plugin="plugin"
-					:events="events"
-				>
-					<el-amap-marker
-						v-for="(marker, index) in markerList"
-						:key="index"
-						:label="marker.label"
-						:position="marker.lnglat"
-						:offset="markerOffset"
-						:vid="marker.id"
-					/>
-				</el-amap>
-			</div>
-		</v-col>
-		<v-tabs
-			height="70"
-			hide-slider=""
-			icons-and-text=""
-			show-arrows=""
-			fixed-tabs=""
-		>
-			<v-tab
-				v-for="(item, index) in bottomNav"
-				:key="index"
-				@click="navPage(item.text)"
-				><span :class="`black--text mb-1 ${navFont}`">{{ $t(item.text) }}</span>
-				<v-img :src="item.image" width="45" contain=""></v-img
-			></v-tab>
-		</v-tabs>
-		<!-- <v-bottom-navigation grow color="primary" fixed="" height="70">
-			<v-btn
-				v-for="(item, index) in bottomNav"
-				:key="index"
-				@click="navPage(item.text)"
-			>
-				<span :class="`black--text mb-1 ${navFont}`">{{ $t(item.text) }}</span>
-				<v-img :src="item.image" width="50" contain=""></v-img>
-			</v-btn>
-		</v-bottom-navigation> -->
-		<v-img
-			v-show="enterMap"
-			id="toMapBtn"
-			class="toMapBtn"
-			src="../assets/toMapBtn.png"
-			@click="navPage('map')"
-		></v-img>
 	</v-row>
 </template>
 
 <script>
-import { AMapManager, lazyAMapApiLoaderInstance } from "vue-amap";
+import "swiper/dist/css/swiper.css";
+
+import { swiper, swiperSlide } from "vue-awesome-swiper";
 export default {
-	components: {},
+	components: { swiper, swiperSlide },
 	mounted() {
 		const _this = this;
 
@@ -283,56 +213,8 @@ export default {
 			this.navFont = "subtitle-2";
 		}
 		_this.loadBanner();
-		const mapBtnInterval = setInterval(function() {
-			const d = document.getElementById("toMapBtn");
-			const ac = document.getElementsByClassName("amap-controls")[0];
-			if (d && ac) {
-				clearInterval(mapBtnInterval);
-				ac.appendChild(d);
-				_this.enterMap = true;
-			}
-		}, 1000);
-		const flexibleLayer = new window.AMap.TileLayer.Flexible({
-			/**
-			 * 自定义切片属性，返回值为切片图片或 canvas
-			 * @param x: 切片横向编号
-			 * @param y: 切片纵向编号
-			 * @param z: 切片层级
-			 * @param success: 创建成功回调
-			 * @param fail: 创建失败回调
-			 */
-			createTile: function(x, y, z, success, fail) {
-				// var image = imageList[x];
-				var img = document.createElement("img");
-				img.onload = function() {
-					success(img);
-				};
-				// img.crossOrigin = "anonymous";//3D 的时候添加，同时图片要有跨域头
-				img.onerror = function() {
-					fail();
-				};
-
-				img.src =
-					"https://o.signp.cn/maps/1403/zh_CN/" +
-					z +
-					"/" +
-					x +
-					"/" +
-					y +
-					".png";
-			},
-			opacity: 1,
-			visible: true,
-			cacheSize: 256, // 内存中缓存的切片的数量上限
-			zIndex: 999,
-			zooms: [14, 18] // 设置可见级别，[最小级别，最大级别]
-		});
-		lazyAMapApiLoaderInstance.load().then(function() {
-			_this.$refs.map.$$getInstance().add(flexibleLayer);
-			_this.mapLimitBounds();
-		});
-		const showHelp = localStorage.getItem("signp-145:showHelp");
-		if (!showHelp) this.showHelp = true;
+		// const showHelp = localStorage.getItem("signp-145:showHelp");
+		// if (!showHelp) this.showHelp = true;
 	},
 	computed: {
 		locale() {
@@ -368,8 +250,17 @@ export default {
 		}
 	},
 	data() {
-		let self = this;
 		return {
+			swiperOption: {
+				slidesPerView: 3,
+				spaceBetween: 10,
+				freeMode: true,
+				pagination: {
+					el: ".swiper-pagination",
+					clickable: true
+				}
+			},
+			showArticleNumber: 3,
 			separatorColor: "rgba(255,255,255,0.3)",
 			showHelp: false,
 			bannerType: "round",
@@ -383,71 +274,40 @@ export default {
 			bottomNav1: [
 				{
 					text: "attractions",
-					image: require("@/assets/b1.png")
-				},
-				{
-					text: "vr",
-					image: require("@/assets/b5.png")
-				},
-				{
-					text: "about",
-					image: require("@/assets/b6.png")
+					image: require("@/assets/v2-b1.png")
 				},
 				{
 					text: "recommend",
-					image: require("@/assets/b2.png")
+					image: require("@/assets/v2-b6.png")
+				},
+				{
+					text: "map",
+					image: require("@/assets/v2-b3.png")
+				},
+				{
+					text: "help",
+					image: require("@/assets/v2-b8.png")
 				}
 			],
 			bottomNav2: [
 				{
-					text: "help",
-					image: require("@/assets/b4.png")
+					text: "about",
+					image: require("@/assets/v2-b4.png")
 				},
 				{
 					text: "surrounding",
-					image: require("@/assets/b3.png")
+					image: require("@/assets/v2-b7.png")
 				},
 				{
-					text: "about",
-					image: require("@/assets/b6.png")
+					text: "vr",
+					image: require("@/assets/v2-b2.png")
 				},
 				{
-					text: "recommend",
-					image: require("@/assets/b2.png")
+					text: "search",
+					image: require("@/assets/v2-b5.png")
 				}
 			],
-			banner: [],
-			amapManager: new AMapManager(),
-			zoom: 16,
-			center: self.$store.state.startPointInfo.center.split(","),
-			lng: 0,
-			lat: 0,
-			events: {},
-			amapPosition: false,
-			mapBounds: {
-				16: [[0, 0], [23.109626, 0]],
-				15: "113.257626, 23.112409;113.271102, 23.121921"
-			},
-			plugin: [
-				{
-					pName: "Geolocation",
-					events: {
-						init() {
-							// o.getCurrentPosition((status, result) => {
-							// 	if (result && result.position) {
-							// 		self.lng = result.position.lng;
-							// 		self.lat = result.position.lat;
-							// 		self.center = [self.lng, self.lat];
-							// 		self.amapPosition = true;
-							// 		self.$nextTick();
-							// 	}
-							// 	self.$nextTick(function(){
-							// 	})
-							// });
-						}
-					}
-				}
-			]
+			banner: []
 		};
 	},
 	methods: {
@@ -507,6 +367,7 @@ export default {
 				const nowTime = new Date().getTime();
 				if (r && r.timestamp > nowTime && r.val.length > 0) {
 					for (let i = 0; i < r.val.length; i++) {
+						if (i === _this.$store.state.startPointInfo.showArticleLimit) break;
 						let _d = new Date(parseInt(r.val[i].article_create_at) * 1000);
 						r.val[i].date =
 							_d.getFullYear() + "/" + (_d.getMonth() + 1) + "/" + _d.getDate();
@@ -539,6 +400,8 @@ export default {
 									val: resp.body
 								});
 								for (let i = 0; i < resp.body.length; i++) {
+									if (i === _this.$store.state.startPointInfo.showArticleLimit)
+										break;
 									let _d = new Date(
 										parseInt(resp.body[i].article_create_at) * 1000
 									);
@@ -682,41 +545,12 @@ export default {
 					location.href = item.link;
 					break;
 				case "mapGid":
-					this.navPage(item.mapGid);
+					this.navPage("details/" + item.mapGid);
 					break;
 				case "internal":
 					this.navPage(item.link);
 					break;
 			}
-			// if (item.bindType)
-			// 	if (index === 0) {
-			// 		location.href =
-			// 			"https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5MDYyNjMxNg==&scene=124#wechat_redirect";
-			// 		return;
-			// 	}
-			// if (index === 1) {
-			// 	location.href = "http://t.cn/A6P1xu21";
-			// 	return;
-			// }
-			// if (index === 2) {
-			// 	location.href = "https://vp.fact.qq.com/home?ADTAG=xw-1.jz";
-			// 	return;
-			// }
-			// if (index === 3) {
-			// 	location.href =
-			// 		"https://promo.guahao.com/topic/pneumonia?_cp=jiaotong_zh&cs=share";
-			// 	return;
-			// }
-			// if (index === 4) {
-			// 	location.href = "https://mp.weixin.qq.com/s/2biZ2Jdkb-oar1PjMXl4gg";
-			// 	return;
-			// }
-			// if (index === 5) {
-			// 	this.navPage("article/965");
-			// 	return;
-			// }
-			// if (!item.link) return;
-			// this.$router.replace({ path: "/" + item.link + "/" + item.mapGid });
 		},
 		loadPolygons() {
 			this.markerList = [];
@@ -743,6 +577,7 @@ export default {
 .v-item-group.v-bottom-navigation .v-btn {
 	min-width: 30px;
 }
+
 .toMapBtn {
 	position: absolute;
 	bottom: 70px;
@@ -754,7 +589,7 @@ export default {
 }
 .bg {
 	width: 100%;
-	height: 34em;
+	height: 33em;
 	top: 0;
 	background: url("../assets/homeBg.jpg") no-repeat center center;
 	background-size: cover;
@@ -765,7 +600,12 @@ export default {
 	background-color: rgba(0, 0, 0, 0.5);
 }
 .roundBorder {
-	padding-top: 30px;
+	border-radius: 50% 50% 0 0 !important;
+	background-color: rgba(0, 0, 0, 0);
+}
+.roundBorder1 {
+	margin-top: 10px;
+	padding-top: 20px;
 	border-radius: 50% 50% 0 0 !important;
 	background-color: rgba(0, 0, 0, 0);
 }

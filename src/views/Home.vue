@@ -601,7 +601,7 @@ export default {
 					location.href = item.link;
 					break;
 				case "mapGid":
-					this.navPage(item.mapGid);
+					this.navPage("details/" + item.mapGid);
 					break;
 				case "internal":
 					this.navPage(item.link);
