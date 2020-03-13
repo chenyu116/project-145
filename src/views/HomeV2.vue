@@ -23,7 +23,7 @@
 		</div> -->
 
 		<v-col cols="12" class="bg">
-			<v-app-bar color="rgba(0, 0, 0, 0.2)" dark="" flat="" dense="">
+			<v-app-bar color="rgba(0, 0, 0, 0.4)" dark="" flat="" dense="">
 				<v-toolbar-title class="subtitle-1"
 					><v-icon left="" dense="" color="cyan">fa-map-marker-alt</v-icon
 					>{{ $t($store.state.startPointInfo.name) }}</v-toolbar-title
@@ -56,7 +56,7 @@
 			>
 				<div
 					class="roundBorder"
-					:style="`width:100%;background: rgba(0, 0, 0, 0.5)`"
+					:style="`width:100%;background: rgba(0, 0, 0, 0.4)`"
 				>
 					<div
 						class="roundBorder1"
@@ -131,7 +131,11 @@
 						/></v-card-title>
 						<swiper :options="swiperOption">
 							<swiper-slide v-for="(b, i) in banner" :key="i"
-								><v-img :src="b.img" aspect-ratio="1.5"></v-img
+								><v-img
+									:src="b.img"
+									aspect-ratio="1.5"
+									@click="bannerClick(b)"
+								></v-img
 							></swiper-slide>
 						</swiper>
 					</v-card>
@@ -158,9 +162,11 @@
 									}}</v-list-item-title>
 								</v-list-item-content>
 
-								<v-list-item-avatar v-if="item.article_icon">
-									<v-img :src="item.article_icon"></v-img>
-								</v-list-item-avatar>
+								<v-list-item-action v-if="item.article_icon">
+									<v-img
+										:src="`https://o.signp.cn/${item.article_icon}`"
+									></v-img>
+								</v-list-item-action>
 							</v-list-item>
 						</v-list>
 					</v-card>
@@ -475,7 +481,6 @@ export default {
 										mapGid: resp.body[i].images_map_gid
 									});
 								}
-
 								_this.banner = banner;
 							}
 						});
