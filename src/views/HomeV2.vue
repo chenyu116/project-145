@@ -52,7 +52,7 @@
 				no-gutters=""
 				justify="center"
 				align="end"
-				style="margin-top: 17.7em;"
+				style="margin-top: 12.7em;"
 			>
 				<div
 					class="roundBorder"
@@ -151,8 +151,9 @@
 								v-for="item in articles"
 								:key="item.article_id"
 								@click="navPage('article/' + item.article_id)"
+								class="mt-0"
 							>
-								<v-list-item-content>
+								<v-list-item-content class="pt-0">
 									<v-list-item-subtitle
 										class=" subtitle-2 black--text"
 										v-text="item.article_title"
@@ -594,7 +595,7 @@ export default {
 }
 .bg {
 	width: 100%;
-	height: 33em;
+	height: 28em;
 	top: 0;
 	background: url("../assets/homeBg.jpg") no-repeat center center;
 	background-size: cover;
@@ -616,5 +617,9 @@ export default {
 }
 .roundBg {
 	border-radius: 50% 50% 0 0 !important;
+}
+.v-list--three-line .v-list-item,
+.v-list-item--three-line {
+	min-height: 10px;
 }
 </style>
